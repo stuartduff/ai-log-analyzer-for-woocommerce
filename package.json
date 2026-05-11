@@ -1,0 +1,31 @@
+{
+    "name": "wc-ai-log-analyzer",
+    "version": "1.0.0",
+    "description": "AI-powered WooCommerce log file analyzer.",
+    "private": true,
+    "scripts": {
+        "build": "wp-scripts build",
+        "start": "wp-scripts start",
+        "lint:js": "wp-scripts lint-js src/",
+        "lint:css": "wp-scripts lint-style src/",
+        "lint:php": "composer lint",
+        "lint:php:fix": "composer lint:fix",
+        "test:js": "wp-scripts test-unit-js"
+    },
+    "wpScripts": {
+        "entry": {
+            "analyze": "./src/analyze/index.js"
+        }
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^6.9.1",
+        "@testing-library/react": "^16.3.2",
+        "@wordpress/scripts": "^27.0"
+    },
+    "dependencies": {
+        "@woocommerce/components": "^13.1.0",
+        "@wordpress/dom-ready": "*",
+        "@wordpress/element": "*",
+        "@wordpress/i18n": "*"
+    }
+}

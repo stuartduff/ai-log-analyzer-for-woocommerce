@@ -1,0 +1,67 @@
+.ai-log-analyzer-modal {
+	&__loading {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 24px 0;
+		gap: 12px;
+	}
+
+	&__section {
+		margin-top: 20px;
+
+		h3 {
+			margin: 0 0 8px;
+		}
+
+		p {
+			margin: 0;
+		}
+	}
+
+	&__results {
+		.components-notice {
+			margin: 0 0 16px;
+		}
+	}
+
+	&__actions {
+		margin-top: 24px;
+		padding-top: 16px;
+		border-top: 1px solid #e0e0e0;
+	}
+}
+
+.ai-log-analyzer-fix-steps {
+	margin-top: 20px;
+
+	h3 {
+		margin: 0 0 8px;
+	}
+
+	ol {
+		margin: 0;
+		padding-left: 1.4em;
+
+		li {
+			margin-bottom: 6px;
+		}
+	}
+}
+
+.ai-log-analyzer-support-contact {
+	margin-top: 20px;
+
+	h3 {
+		margin: 0 0 8px;
+	}
+
+	p {
+		margin: 0 0 12px;
+	}
+}
+
+// "Analyse with AI" injected button spacing.
+.ai-log-analyzer-btn {
+	margin-left: 4px;
+}

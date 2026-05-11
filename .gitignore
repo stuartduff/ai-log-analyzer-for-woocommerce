@@ -1,0 +1,9 @@
+vendor/
+node_modules/
+dev-docs/
+build/
+*.log
+.gstack/
+.claude/
+.DS_Store
+npm-debug.log*

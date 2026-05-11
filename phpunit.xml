@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+	bootstrap="tests/php/bootstrap.php"
+	cacheResult="false"
+	colors="true"
+>
+	<testsuites>
+		<testsuite name="AI Log Analyzer">
+			<directory>tests/php</directory>
+		</testsuite>
+	</testsuites>
+
+	<source>
+		<include>
+			<directory>includes</directory>
+			<directory>admin</directory>
+		</include>
+	</source>
+</phpunit>

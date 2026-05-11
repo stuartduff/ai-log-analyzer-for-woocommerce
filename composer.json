@@ -1,0 +1,34 @@
+{
+    "name": "woocommerce/ai-log-analyzer",
+    "description": "AI-powered WooCommerce log file analyzer that helps customers understand and resolve log issues independently.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpunit/phpunit": "^10.0",
+        "wp-phpunit/wp-phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AI_Log_Analyzer\\": "includes/"
+        },
+        "classmap": [
+            "includes/",
+            "admin/"
+        ]
+    },
+    "scripts": {
+        "lint":     "vendor/bin/phpcs",
+        "lint:fix": "vendor/bin/phpcbf",
+        "test":     "vendor/bin/phpunit --configuration phpunit.xml"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
