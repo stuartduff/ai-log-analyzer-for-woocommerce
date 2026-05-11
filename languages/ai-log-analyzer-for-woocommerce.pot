@@ -1,0 +1,230 @@
+# Copyright (C) 2026 Stuart Duff
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Log Analyzer for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-log-analyzer-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-05-11T16:30:26+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: ai-log-analyzer-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: ai-log-analyzer-for-woocommerce.php
+msgid "AI Log Analyzer for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: ai-log-analyzer-for-woocommerce.php
+msgid "https://stuartduff.com"
+msgstr ""
+
+#. Description of the plugin
+#: ai-log-analyzer-for-woocommerce.php
+msgid "AI-powered WooCommerce log file analyzer that helps store owners understand and resolve log issues independently, or with the help the plugin or theme developer if needed."
+msgstr ""
+
+#. Author of the plugin
+#: ai-log-analyzer-for-woocommerce.php
+msgid "Stuart Duff"
+msgstr ""
+
+#: admin/class-admin-interface.php:52
+msgid "Analysis"
+msgstr ""
+
+#: admin/class-admin-interface.php:59
+msgid "AI Model Preference"
+msgstr ""
+
+#: admin/class-admin-interface.php:67
+msgid "Temperature (0–10)"
+msgstr ""
+
+#: admin/class-admin-interface.php:76
+msgid "Limits &amp; Permissions"
+msgstr ""
+
+#: admin/class-admin-interface.php:83
+msgid "Maximum File Size (MB)"
+msgstr ""
+
+#: admin/class-admin-interface.php:91
+msgid "Allow Shop Managers"
+msgstr ""
+
+#: admin/class-admin-interface.php:158
+msgid "Only connected providers are shown."
+msgstr ""
+
+#: admin/class-admin-interface.php:160
+msgid "Manage connectors"
+msgstr ""
+
+#: admin/class-admin-interface.php:175
+msgid "Anthropic"
+msgstr ""
+
+#: admin/class-admin-interface.php:176
+msgid "Google"
+msgstr ""
+
+#: admin/class-admin-interface.php:177
+msgid "OpenAI"
+msgstr ""
+
+#: admin/class-admin-interface.php:255
+msgid "Stored as an integer and divided by 10 when passed to the AI (e.g. 3 → 0.3)."
+msgstr ""
+
+#: admin/class-admin-interface.php:273
+msgid "Log files larger than this limit will be truncated from the start (most recent content kept)."
+msgstr ""
+
+#: admin/class-admin-interface.php:290
+msgid "Allow users with the Shop Manager role to run log analysis (in addition to admins)."
+msgstr ""
+
+#: admin/class-admin-interface.php:302
+#: admin/class-admin-interface.php:303
+msgid "AI Log Analyzer"
+msgstr ""
+
+#: admin/views/settings-page.php:19
+msgid "Save Settings"
+msgstr ""
+
+#: includes/class-ai-client.php:81
+msgid "WordPress AI Client is not available. Please upgrade to WordPress 7.0."
+msgstr ""
+
+#: includes/class-log-integration.php:129
+msgid "Analyse with AI"
+msgstr ""
+
+#: includes/class-log-integration.php:130
+msgid "Analysing log…"
+msgstr ""
+
+#: includes/class-log-integration.php:131
+msgid "An error occurred during analysis. Please try again."
+msgstr ""
+
+#: includes/class-log-integration.php:183
+msgid "You do not have permission to analyse logs."
+msgstr ""
+
+#: includes/class-log-integration.php:191
+msgid "No log file ID provided."
+msgstr ""
+
+#: includes/class-log-integration.php:212
+msgid "The AI client returned an invalid response."
+msgstr ""
+
+#. translators: %s: Missing JSON key name.
+#: includes/class-log-integration.php:222
+#, php-format
+msgid "Incomplete AI response — missing key: %s."
+msgstr ""
+
+#: includes/class-log-integration.php:241
+msgid "You do not have permission to download reports."
+msgstr ""
+
+#: includes/class-log-integration.php:251
+msgid "Invalid report data."
+msgstr ""
+
+#: includes/class-log-integration.php:272
+msgid "You must be logged in to perform this action."
+msgstr ""
+
+#: includes/class-log-integration.php:338
+msgid "WooCommerce FileV2 log handler is not available."
+msgstr ""
+
+#: includes/class-log-integration.php:346
+#: includes/class-log-integration.php:435
+msgid "Log file not found."
+msgstr ""
+
+#: includes/class-log-integration.php:368
+msgid "Invalid log file identifier."
+msgstr ""
+
+#: includes/class-log-integration.php:398
+msgid "Database query failed."
+msgstr ""
+
+#: includes/class-log-integration.php:402
+msgid "No log entries found for this source."
+msgstr ""
+
+#: includes/class-log-integration.php:443
+msgid "Log file path is outside the allowed log directory."
+msgstr ""
+
+#: includes/class-log-integration.php:448
+msgid "Log file is not readable."
+msgstr ""
+
+#: includes/class-log-integration.php:455
+msgid "Could not read log file."
+msgstr ""
+
+#: includes/class-log-integration.php:572
+msgid "WC AI Log Analysis Report"
+msgstr ""
+
+#: includes/class-log-integration.php:586
+msgid "WooCommerce Log Analysis Report"
+msgstr ""
+
+#: includes/class-log-integration.php:587
+msgid "Generated"
+msgstr ""
+
+#: includes/class-log-integration.php:591
+msgid "Summary"
+msgstr ""
+
+#: includes/class-log-integration.php:594
+msgid "Root Cause"
+msgstr ""
+
+#: includes/class-log-integration.php:597
+msgid "Steps to Fix"
+msgstr ""
+
+#: includes/class-log-integration.php:600
+msgid "Support Contact"
+msgstr ""
+
+#: includes/class-log-integration.php:605
+msgid "Generated by AI Log Analyzer for WooCommerce"
+msgstr ""
+
+#: includes/class-plugin.php:107
+msgid "AI Log Analyzer for WooCommerce requires WooCommerce to be installed and active."
+msgstr ""
+
+#: includes/class-plugin.php:111
+msgid "AI Log Analyzer for WooCommerce requires WordPress 7.0 or higher."
+msgstr ""
+
+#. translators: %s: Current PHP version number.
+#: includes/class-plugin.php:117
+#, php-format
+msgid "AI Log Analyzer for WooCommerce requires PHP 8.0 or higher. You are running PHP %s."
+msgstr ""
+
+#: includes/class-plugin.php:123
+msgid "AI Log Analyzer for WooCommerce requires the WordPress AI Client (available in WordPress 7.0+). Please upgrade WordPress or configure an AI connector."
+msgstr ""
