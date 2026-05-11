@@ -6,6 +6,7 @@ composer.lock
 package.json
 package-lock.json
 yarn.lock
+jest-unit.config.js
 .phpcs.xml
 phpunit.xml
 webpack.config.js
@@ -16,5 +17,7 @@ webpack.config.js
 .gstack/
 .DS_Store
 dev-docs/
+bin/
+dist/
 *.log
 **/.gitkeep
