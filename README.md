@@ -86,6 +86,24 @@ composer lint:fix   # PHPCBF auto-fix
 composer test       # PHPUnit
 ```
 
+### Translations & Release
+
+```bash
+yarn makepot        # Regenerate languages/ai-log-analyzer-for-woocommerce.pot
+yarn build:zip      # Build production zip → dist/ai-log-analyzer-for-woocommerce.zip
+```
+
+Both commands shell out to [WP-CLI](https://wp-cli.org/) (`wp i18n make-pot`), so `wp` must be on your `PATH` — on macOS install with `brew install wp-cli`.
+
+`yarn build:zip` runs `bin/build-zip.sh`, which:
+
+1. Cleans `dist/`.
+2. Runs the production webpack build.
+3. Reinstalls Composer with `--no-dev --optimize-autoloader` for a slim autoloader.
+4. Stages the plugin into a slug-named folder, excluding everything in `.distignore`.
+5. Zips it to `dist/ai-log-analyzer-for-woocommerce.zip` (installable via **WP Admin → Plugins → Add New → Upload**).
+6. Restores Composer dev dependencies.
+
 ## Architecture Overview
 
 ### AI Integration
