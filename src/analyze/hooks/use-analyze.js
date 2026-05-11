@@ -210,13 +210,28 @@ export default function useAnalyze() {
 		} catch ( err ) {
 			setDownloadError(
 				err?.name === 'AbortError'
-					? __( 'Report download timed out. Please try again.', 'ai-log-analyzer' )
-					: __( 'Report download failed. Please try again.', 'ai-log-analyzer' )
+					? __(
+							'Report download timed out. Please try again.',
+							'ai-log-analyzer'
+					  )
+					: __(
+							'Report download failed. Please try again.',
+							'ai-log-analyzer'
+					  )
 			);
 		} finally {
 			clearTimeout( timeoutId );
 		}
 	}, [ result ] );
 
-	return { isOpen, isLoading, result, error, fileId, downloadError, close, downloadReport };
+	return {
+		isOpen,
+		isLoading,
+		result,
+		error,
+		fileId,
+		downloadError,
+		close,
+		downloadReport,
+	};
 }

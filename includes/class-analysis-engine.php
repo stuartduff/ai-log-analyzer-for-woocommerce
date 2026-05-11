@@ -44,7 +44,7 @@ class Analysis_Engine {
 		'/PHP Notice/i'               => 'php_notice',
 		'/WordPress database error/i' => 'database_error',
 		'/cURL error/i'               => 'network_error',
-		'/memory.*exhausted/i'         => 'memory_limit',
+		'/memory.*exhausted/i'        => 'memory_limit',
 		'/Maximum execution time/i'   => 'timeout',
 		'/Call to undefined/i'        => 'missing_function',
 		'/Class .* not found/i'       => 'missing_class',
@@ -74,9 +74,9 @@ class Analysis_Engine {
 	 * @return string|\WP_Error Raw JSON string on success, WP_Error on failure.
 	 */
 	public function analyze( string $log_content, array $context ): string|\WP_Error {
-		$plugin_files        = $this->identify_plugin_files_in_log( $log_content );
+		$plugin_files         = $this->identify_plugin_files_in_log( $log_content );
 		$plugins_support_data = $this->get_plugins_support_data( $plugin_files );
-		$enriched_context    = $this->enrich_context( $log_content, $context, $plugins_support_data );
+		$enriched_context     = $this->enrich_context( $log_content, $context, $plugins_support_data );
 
 		$result = $this->ai_client->analyze_log( $log_content, $enriched_context );
 

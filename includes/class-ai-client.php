@@ -38,8 +38,8 @@ class AI_Client {
 	/**
 	 * JSON output schema for the structured AI response.
 	 *
-	 * contact_url is intentionally excluded — it is set authoritatively by
-	 * Analysis_Engine::inject_support_url() using plugin header data after the
+	 * The contact_url field is intentionally excluded — it is set authoritatively
+	 * by Analysis_Engine::inject_support_url() using plugin header data after the
 	 * AI responds, so the AI is not asked to guess URLs.
 	 *
 	 * @var array<string, mixed>

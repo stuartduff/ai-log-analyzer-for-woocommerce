@@ -137,10 +137,10 @@ class Admin_Interface {
 	 * @return void
 	 */
 	public function render_model_preference_field(): void {
-		$options  = (array) get_option( AI_LOG_ANALYZER_OPTION, array() );
-		$current  = $options['model_preference'] ?? 'anthropic';
-		$choices  = $this->get_available_providers();
-		$name     = AI_LOG_ANALYZER_OPTION . '[model_preference]';
+		$options = (array) get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$current = $options['model_preference'] ?? 'anthropic';
+		$choices = $this->get_available_providers();
+		$name    = AI_LOG_ANALYZER_OPTION . '[model_preference]';
 
 		foreach ( $choices as $value => $label ) {
 			printf(
@@ -197,7 +197,7 @@ class Admin_Interface {
 			}
 		}
 
-		return $available ?: $all;
+		return ! empty( $available ) ? $available : $all;
 	}
 
 	/**

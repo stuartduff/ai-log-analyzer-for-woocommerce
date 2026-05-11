@@ -18,8 +18,15 @@ import SupportContact from './components/support-contact';
  * @return {JSX.Element|null} The analysis modal, or null when closed.
  */
 export default function AnalysisResults() {
-	const { isOpen, isLoading, result, error, downloadError, close, downloadReport } =
-		useAnalyze();
+	const {
+		isOpen,
+		isLoading,
+		result,
+		error,
+		downloadError,
+		close,
+		downloadReport,
+	} = useAnalyze();
 
 	if ( ! isOpen ) {
 		return null;

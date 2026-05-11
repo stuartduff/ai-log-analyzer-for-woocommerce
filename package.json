@@ -7,7 +7,7 @@
         "build": "wp-scripts build",
         "start": "wp-scripts start",
         "lint:js": "wp-scripts lint-js src/",
-        "lint:css": "wp-scripts lint-style src/",
+        "lint:css": "wp-scripts lint-style 'src/**/*.scss'",
         "lint:php": "composer lint",
         "lint:php:fix": "composer lint:fix",
         "test:js": "wp-scripts test-unit-js",
