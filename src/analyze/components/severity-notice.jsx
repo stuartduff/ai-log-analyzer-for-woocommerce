@@ -25,13 +25,16 @@ export default function SeverityNotice( { severity } ) {
 	const labels = {
 		critical: __(
 			'Critical issue detected — immediate action required.',
-			'ai-log-analyzer'
+			'ai-log-analyzer-for-woocommerce'
 		),
 		warning: __(
 			'Warning — this issue may affect your store.',
-			'ai-log-analyzer'
+			'ai-log-analyzer-for-woocommerce'
 		),
-		notice: __( 'Notice — low-severity issue found.', 'ai-log-analyzer' ),
+		notice: __(
+			'Notice — low-severity issue found.',
+			'ai-log-analyzer-for-woocommerce'
+		),
 	};
 
 	return (

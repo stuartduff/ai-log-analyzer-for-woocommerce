@@ -18,7 +18,7 @@ export default function FixSteps( { steps } ) {
 
 	return (
 		<div className="ai-log-analyzer-fix-steps">
-			<h3>{ __( 'Steps to Fix', 'ai-log-analyzer' ) }</h3>
+			<h3>{ __( 'Steps to Fix', 'ai-log-analyzer-for-woocommerce' ) }</h3>
 			<ol>
 				{ steps.map( ( step, index ) => (
 					// Steps come from the AI — the index is a stable key here.

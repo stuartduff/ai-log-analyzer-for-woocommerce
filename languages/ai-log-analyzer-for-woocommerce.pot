@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-11T16:30:26+00:00\n"
+"POT-Creation-Date: 2026-05-11T16:50:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ai-log-analyzer-for-woocommerce\n"
@@ -109,6 +109,7 @@ msgid "Analyse with AI"
 msgstr ""
 
 #: includes/class-log-integration.php:130
+#: src/analyze/analysis-results.jsx:48
 msgid "Analysing log…"
 msgstr ""
 
@@ -192,14 +193,17 @@ msgid "Generated"
 msgstr ""
 
 #: includes/class-log-integration.php:591
+#: src/analyze/analysis-results.jsx:66
 msgid "Summary"
 msgstr ""
 
 #: includes/class-log-integration.php:594
+#: src/analyze/analysis-results.jsx:71
 msgid "Root Cause"
 msgstr ""
 
 #: includes/class-log-integration.php:597
+#: src/analyze/components/fix-steps.jsx:21
 msgid "Steps to Fix"
 msgstr ""
 
@@ -227,4 +231,48 @@ msgstr ""
 
 #: includes/class-plugin.php:123
 msgid "AI Log Analyzer for WooCommerce requires the WordPress AI Client (available in WordPress 7.0+). Please upgrade WordPress or configure an AI connector."
+msgstr ""
+
+#: src/analyze/analysis-results.jsx:37
+msgid "AI Log Analysis"
+msgstr ""
+
+#: src/analyze/analysis-results.jsx:84
+msgid "Download Report"
+msgstr ""
+
+#: src/analyze/components/severity-notice.jsx:26
+msgid "Critical issue detected — immediate action required."
+msgstr ""
+
+#: src/analyze/components/severity-notice.jsx:30
+msgid "Warning — this issue may affect your store."
+msgstr ""
+
+#: src/analyze/components/severity-notice.jsx:34
+msgid "Notice — low-severity issue found."
+msgstr ""
+
+#: src/analyze/components/support-contact.jsx:26
+msgid "Who to Contact"
+msgstr ""
+
+#: src/analyze/components/support-contact.jsx:35
+msgid "Visit Support Page"
+msgstr ""
+
+#: src/analyze/hooks/use-analyze.js:122
+msgid "The analysis timed out. The log file may be too large or the AI service may be unavailable."
+msgstr ""
+
+#: src/analyze/hooks/use-analyze.js:195
+msgid "Report download failed."
+msgstr ""
+
+#: src/analyze/hooks/use-analyze.js:213
+msgid "Report download timed out. Please try again."
+msgstr ""
+
+#: src/analyze/hooks/use-analyze.js:217
+msgid "Report download failed. Please try again."
 msgstr ""

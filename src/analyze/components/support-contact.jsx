@@ -23,7 +23,9 @@ export default function SupportContact( { contact, contactUrl } ) {
 
 	return (
 		<div className="ai-log-analyzer-support-contact">
-			<h3>{ __( 'Who to Contact', 'ai-log-analyzer' ) }</h3>
+			<h3>
+				{ __( 'Who to Contact', 'ai-log-analyzer-for-woocommerce' ) }
+			</h3>
 			<p>{ contact }</p>
 			{ contactUrl && (
 				<Button
@@ -32,7 +34,10 @@ export default function SupportContact( { contact, contactUrl } ) {
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					{ __( 'Visit Support Page', 'ai-log-analyzer' ) }
+					{ __(
+						'Visit Support Page',
+						'ai-log-analyzer-for-woocommerce'
+					) }
 				</Button>
 			) }
 		</div>

@@ -34,7 +34,7 @@ export default function AnalysisResults() {
 
 	return (
 		<Modal
-			title={ __( 'AI Log Analysis', 'ai-log-analyzer' ) }
+			title={ __( 'AI Log Analysis', 'ai-log-analyzer-for-woocommerce' ) }
 			onRequestClose={ close }
 			size="large"
 			className="ai-log-analyzer-modal"
@@ -45,7 +45,10 @@ export default function AnalysisResults() {
 					<Spinner />
 					<p>
 						{ window.aiLogAnalyzer?.i18n?.analyzing ??
-							__( 'Analysing log\u2026', 'ai-log-analyzer' ) }
+							__(
+								'Analysing log\u2026',
+								'ai-log-analyzer-for-woocommerce'
+							) }
 					</p>
 				</div>
 			) }
@@ -63,12 +66,22 @@ export default function AnalysisResults() {
 					<SeverityNotice severity={ result.severity } />
 
 					<div className="ai-log-analyzer-modal__section">
-						<h3>{ __( 'Summary', 'ai-log-analyzer' ) }</h3>
+						<h3>
+							{ __(
+								'Summary',
+								'ai-log-analyzer-for-woocommerce'
+							) }
+						</h3>
 						<p>{ result.summary }</p>
 					</div>
 
 					<div className="ai-log-analyzer-modal__section">
-						<h3>{ __( 'Root Cause', 'ai-log-analyzer' ) }</h3>
+						<h3>
+							{ __(
+								'Root Cause',
+								'ai-log-analyzer-for-woocommerce'
+							) }
+						</h3>
 						<p>{ result.cause }</p>
 					</div>
 
@@ -81,7 +94,10 @@ export default function AnalysisResults() {
 
 					<div className="ai-log-analyzer-modal__actions">
 						<Button variant="secondary" onClick={ downloadReport }>
-							{ __( 'Download Report', 'ai-log-analyzer' ) }
+							{ __(
+								'Download Report',
+								'ai-log-analyzer-for-woocommerce'
+							) }
 						</Button>
 						{ downloadError && (
 							<Notice status="error" isDismissible={ false }>

@@ -121,7 +121,7 @@ export default function useAnalyze() {
 					isTimeout
 						? __(
 								'The analysis timed out. The log file may be too large or the AI service may be unavailable.',
-								'ai-log-analyzer'
+								'ai-log-analyzer-for-woocommerce'
 						  )
 						: err?.message ??
 								window.aiLogAnalyzer?.i18n?.error ??
@@ -192,7 +192,10 @@ export default function useAnalyze() {
 				const data = await response.json();
 				setDownloadError(
 					data?.data?.message ??
-						__( 'Report download failed.', 'ai-log-analyzer' )
+						__(
+							'Report download failed.',
+							'ai-log-analyzer-for-woocommerce'
+						)
 				);
 				return;
 			}
@@ -212,11 +215,11 @@ export default function useAnalyze() {
 				err?.name === 'AbortError'
 					? __(
 							'Report download timed out. Please try again.',
-							'ai-log-analyzer'
+							'ai-log-analyzer-for-woocommerce'
 					  )
 					: __(
 							'Report download failed. Please try again.',
-							'ai-log-analyzer'
+							'ai-log-analyzer-for-woocommerce'
 					  )
 			);
 		} finally {
