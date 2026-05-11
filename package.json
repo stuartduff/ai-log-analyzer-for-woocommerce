@@ -10,7 +10,8 @@
         "lint:css": "wp-scripts lint-style src/",
         "lint:php": "composer lint",
         "lint:php:fix": "composer lint:fix",
-        "test:js": "wp-scripts test-unit-js"
+        "test:js": "wp-scripts test-unit-js",
+        "makepot": "wp i18n make-pot . languages/ai-log-analyzer-for-woocommerce.pot --domain=ai-log-analyzer-for-woocommerce --slug=ai-log-analyzer-for-woocommerce"
     },
     "wpScripts": {
         "entry": {
