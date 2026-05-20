@@ -23,7 +23,7 @@ class Admin_Interface {
 	 */
 	public function register_hooks(): void {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_menu', array( $this, 'register_menu' ) );
+		add_action( 'admin_menu', array( $this, 'register_menu' ), 100 );
 	}
 
 	/**
