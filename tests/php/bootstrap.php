@@ -95,4 +95,10 @@ if ( ! function_exists( 'absint' ) ) {
 	}
 }
 
+if ( ! function_exists( 'current_user_can' ) ) {
+	function current_user_can( $capability ) {
+		return $GLOBALS['test_caps'][ $capability ] ?? false;
+	}
+}
+
 require dirname( __DIR__, 2 ) . '/vendor/autoload.php';

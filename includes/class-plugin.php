@@ -161,6 +161,13 @@ class Plugin {
 			return false;
 		}
 
+		// Administrators always have access regardless of whether the prompt_ai
+		// capability has been assigned to their role (e.g. fresh WP 7.0 installs
+		// where the role capabilities table was never updated).
+		if ( current_user_can( 'manage_options' ) ) {
+			return true;
+		}
+
 		if ( current_user_can( 'prompt_ai' ) ) {
 			return true;
 		}
