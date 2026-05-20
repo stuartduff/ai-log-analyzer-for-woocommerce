@@ -33,7 +33,7 @@ AI Log Analyzer for WooCommerce integrates directly with the WooCommerce log man
 
 == Installation ==
 
-1. Upload the `wc-ai-log-analyzer` directory to `/wp-content/plugins/`.
+1. Upload the `ai-log-analyzer-for-woocommerce` directory to `/wp-content/plugins/`.
 2. Activate the plugin through **Plugins › Installed Plugins**.
 3. Go to **Settings › Connectors** and connect at least one AI provider (Anthropic, Google, or OpenAI).
 4. Navigate to **WooCommerce › AI Log Analyzer** to configure analysis settings.
@@ -43,7 +43,7 @@ AI Log Analyzer for WooCommerce integrates directly with the WooCommerce log man
 
 = Does this plugin send my log data to third-party services? =
 
-Log content is sent to the AI provider you have configured in Settings › Connectors. No data is retained by this plugin beyond a 1-hour analysis cache.
+Log content is sent to the AI provider you have configured in Settings › Connectors. This plugin does not store or cache log content — data is transmitted for analysis and not retained.
 
 Before transmission, common patterns of sensitive data are automatically stripped: API keys and secrets, passwords, auth tokens, email addresses, HTTP Authorization and X-API-Key headers, DSN connection-string credentials, and PEM-encoded private keys. Redaction covers key=value pairs, JSON fields, and prefixed key names (e.g. `db_password`, `stripe_secret`).
 
@@ -51,11 +51,11 @@ Before transmission, common patterns of sensitive data are automatically strippe
 
 = Which AI providers are supported? =
 
-Any provider configured in the WordPress Connectors API is supported: Anthropic (Claude), Google (Gemini), and OpenAI (GPT). The plugin uses `using_model_preference()` to automatically fall back between providers.
+Any provider configured in the WordPress Connectors API is supported: Anthropic (Claude), Google (Gemini), and OpenAI (GPT). The active provider is selected via the AI Model Preference setting; the WordPress AI Client (`wp_ai_client_prompt`) handles the request.
 
 = Can Shop Managers use the analyzer? =
 
-By default, only users with both `manage_woocommerce` and `prompt_ai` capabilities can run analyses. You can enable access for Shop Managers under **WooCommerce › AI Log Analyzer › Limits & Permissions**.
+By default, administrators (users with `manage_options`) and any user with both `manage_woocommerce` and `prompt_ai` capabilities can run analyses. Access for Shop Managers can be enabled under **WooCommerce › AI Log Analyzer › Limits & Permissions**.
 
 = What happens if a log file is very large? =
 
