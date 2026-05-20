@@ -13,9 +13,6 @@
         "wp-phpunit/wp-phpunit": "^6.0"
     },
     "autoload": {
-        "psr-4": {
-            "AI_Log_Analyzer\\": "includes/"
-        },
         "classmap": [
             "includes/",
             "admin/"
