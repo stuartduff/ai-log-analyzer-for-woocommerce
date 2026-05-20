@@ -50,7 +50,14 @@ async function wpAjaxRaw( action, payload, signal ) {
 	);
 
 	if ( ! response.ok ) {
-		throw new Error( `HTTP ${ response.status }` );
+		let message;
+		try {
+			const data = await response.json();
+			message = data?.data?.message;
+		} catch {
+			// Body is not valid JSON (e.g. nonce failure returns plain -1).
+		}
+		throw new Error( message ?? `HTTP ${ response.status }` );
 	}
 
 	return response;

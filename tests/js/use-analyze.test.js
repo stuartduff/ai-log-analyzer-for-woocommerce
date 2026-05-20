@@ -122,7 +122,7 @@ describe( 'useAnalyze — aiLogAnalyzer:analyze event', () => {
 		expect( result.current.error ).toBe( 'An error occurred during analysis.' );
 	} );
 
-	it( 'sets error on HTTP failure', async () => {
+	it( 'falls back to HTTP status string when response body is not JSON', async () => {
 		global.fetch = jest.fn( () =>
 			Promise.resolve( { ok: false, status: 500 } )
 		);
@@ -133,6 +133,31 @@ describe( 'useAnalyze — aiLogAnalyzer:analyze event', () => {
 		} );
 
 		expect( result.current.error ).toMatch( /HTTP 500/ );
+		expect( result.current.isLoading ).toBe( false );
+	} );
+
+	it( 'uses the JSON error message instead of HTTP status when available', async () => {
+		global.fetch = jest.fn( () =>
+			Promise.resolve( {
+				ok: false,
+				status: 403,
+				json: () =>
+					Promise.resolve( {
+						data: {
+							message: 'You do not have permission to analyse logs.',
+						},
+					} ),
+			} )
+		);
+		const { result } = renderHook( () => useAnalyze() );
+
+		await act( async () => {
+			fireAnalyzeEvent();
+		} );
+
+		expect( result.current.error ).toBe(
+			'You do not have permission to analyse logs.'
+		);
 		expect( result.current.isLoading ).toBe( false );
 	} );
 
