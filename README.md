@@ -4,13 +4,15 @@ An AI-powered WooCommerce log file analyzer. Integrates with the WordPress 7.0+ 
 
 ## Requirements
 
-| Dependency | Version |
-|---|---|
-| PHP | 8.0+ |
-| WordPress | 7.0+ |
+
+| Dependency  | Version       |
+| ----------- | ------------- |
+| PHP         | 8.0+          |
+| WordPress   | 7.0+          |
 | WooCommerce | Latest stable |
-| Node.js | 18+ |
-| Composer | 2.x |
+| Node.js     | 18+           |
+| Composer    | 2.x           |
+
 
 > WordPress 7.0 introduces the [WordPress AI Client](https://make.wordpress.org/core/) (`wp_ai_client_prompt`). The plugin will not initialize without it.
 
@@ -25,10 +27,10 @@ cd wp-content/plugins/wc-ai-log-analyzer
 composer install
 
 # 3. Install JS dependencies
-yarn install
+npm install
 
 # 4. Compile assets
-yarn build
+npm build
 ```
 
 Activate the plugin from **WP Admin → Plugins**, then navigate to **WooCommerce → Status → Logs** to use it.
@@ -36,7 +38,7 @@ Activate the plugin from **WP Admin → Plugins**, then navigate to **WooCommerc
 For active JS development with hot reloading:
 
 ```bash
-yarn start
+npm start
 ```
 
 ## Project Structure
@@ -60,7 +62,7 @@ wc-ai-log-analyzer/
 │       ├── analysis-results.jsx # Root component
 │       ├── components/          # Severity notice, fix steps, support contact
 │       └── hooks/               # use-analyze.js — AJAX fetch hook
-├── build/                       # Compiled JS/CSS (gitignored — run yarn build)
+├── build/                       # Compiled JS/CSS (gitignored — run npm build)
 └── tests/
     ├── php/                     # PHPUnit test suites
     └── js/                      # wp-scripts JS test suites
@@ -71,11 +73,11 @@ wc-ai-log-analyzer/
 ### JavaScript
 
 ```bash
-yarn build          # Production build → build/
-yarn start          # Development build with file watcher
-yarn lint:js        # ESLint — src/
-yarn lint:css       # Stylelint — src/
-yarn test:js        # JS unit tests via wp-scripts
+npm build          # Production build → build/
+npm start          # Development build with file watcher
+npm lint:js        # ESLint — src/
+npm lint:css       # Stylelint — src/
+ynpm test:js        # JS unit tests via wp-scripts
 ```
 
 ### PHP
@@ -89,13 +91,13 @@ composer test       # PHPUnit
 ### Translations & Release
 
 ```bash
-yarn makepot        # Regenerate languages/ai-log-analyzer-for-woocommerce.pot
-yarn build:zip      # Build production zip → dist/ai-log-analyzer-for-woocommerce.zip
+npm makepot        # Regenerate languages/ai-log-analyzer-for-woocommerce.pot
+npm build:zip      # Build production zip → dist/ai-log-analyzer-for-woocommerce.zip
 ```
 
 Both commands shell out to [WP-CLI](https://wp-cli.org/) (`wp i18n make-pot`), so `wp` must be on your `PATH` — on macOS install with `brew install wp-cli`.
 
-`yarn build:zip` runs `bin/build-zip.sh`, which:
+`npm build:zip` runs `bin/build-zip.sh`, which:
 
 1. Cleans `dist/`.
 2. Runs the production webpack build.
@@ -110,11 +112,13 @@ Both commands shell out to [WP-CLI](https://wp-cli.org/) (`wp i18n make-pot`), s
 
 The plugin uses the WordPress AI Client API introduced in WordPress 7.0. The `AI_Client` class wraps `wp_ai_client_prompt()` and supports three model preferences (configurable via plugin settings):
 
-| Setting | Model |
-|---|---|
-| `anthropic` | `claude-sonnet-4-6` |
-| `google` | `gemini-3.1-pro-preview` |
-| `openai` | `gpt-5.4` |
+
+| Setting     | Model                    |
+| ----------- | ------------------------ |
+| `anthropic` | `claude-sonnet-4-6`      |
+| `google`    | `gemini-3.1-pro-preview` |
+| `openai`    | `gpt-5.4`                |
+
 
 The AI is always called with a structured JSON output schema (`RESPONSE_SCHEMA` in `AI_Client`) and a system instruction that enforces plain-English, non-technical responses aimed at store owners.
 
@@ -122,11 +126,13 @@ The AI is always called with a structured JSON output schema (`RESPONSE_SCHEMA` 
 
 The plugin detects which WooCommerce log handler is active and reads log content accordingly:
 
-| Handler | Detection | Read method |
-|---|---|---|
-| FileV2 | Default (non-numeric, non-.log ID) | `FileController::get_file_by_id()` |
-| Legacy | File ID ends in `.log` | Reads from `WC_LOG_DIR` |
-| Database | Numeric file ID | Queries `{prefix}_woocommerce_log` |
+
+| Handler  | Detection                          | Read method                        |
+| -------- | ---------------------------------- | ---------------------------------- |
+| FileV2   | Default (non-numeric, non-.log ID) | `FileController::get_file_by_id()` |
+| Legacy   | File ID ends in `.log`             | Reads from `WC_LOG_DIR`            |
+| Database | Numeric file ID                    | Queries `{prefix}_woocommerce_log` |
+
 
 ### Permissions
 
