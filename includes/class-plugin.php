@@ -107,7 +107,7 @@ class Plugin {
 			$errors[] = __( 'AI Log Analyzer for WooCommerce requires WooCommerce to be installed and active.', 'ai-log-analyzer-for-woocommerce' );
 		}
 
-		if ( version_compare( get_bloginfo( 'version' ), '7.0-RC1', '<' ) ) {
+		if ( version_compare( get_bloginfo( 'version' ), '7.0', '<' ) ) {
 			$errors[] = __( 'AI Log Analyzer for WooCommerce requires WordPress 7.0 or higher.', 'ai-log-analyzer-for-woocommerce' );
 		}
 
