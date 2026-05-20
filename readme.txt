@@ -1,6 +1,6 @@
 === AI Log Analyzer for WooCommerce ===
 Contributors: stuartduff
-Plugin URI: https://stuartduff.com
+Plugin URI: https://github.com/stuartduff/ai-log-analyzer-for-woocommerce
 Tags: woocommerce, logs, ai, support, diagnostics
 Requires at least: 7.0
 Tested up to: 7.0

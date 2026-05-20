@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: AI Log Analyzer for WooCommerce
- * Plugin URI:  https://stuartduff.com
+ * Plugin URI:  https://github.com/stuartduff/ai-log-analyzer-for-woocommerce
  * Description: AI-powered WooCommerce log file analyzer that helps store owners understand and resolve log issues independently, or with the help the plugin or theme developer if needed.
  * Version:     1.0.0
  * Requires at least: 7.0
