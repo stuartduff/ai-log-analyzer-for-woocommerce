@@ -171,7 +171,7 @@ describe( 'useAnalyze — aiLogAnalyzer:analyze event', () => {
 
 		const [ , init ] = global.fetch.mock.calls[ 0 ];
 		const body = new URLSearchParams( init.body );
-		expect( body.get( 'action' ) ).toBe( 'ai_analyze_log' );
+		expect( body.get( 'action' ) ).toBe( 'ailwc_analyze_log' );
 		expect( body.get( 'nonce' ) ).toBe( 'test-nonce' );
 		expect( body.get( 'file_id' ) ).toBe( 'specific.log' );
 	} );

@@ -5,10 +5,10 @@
  * Handles script enqueuing, mount-point injection, AJAX handlers, and
  * log content extraction for all three WC log handler types.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer;
+namespace AILWC_Log_Analyzer;
 
 use Automattic\WooCommerce\Internal\Admin\Logging\FileV2\FileController;
 
@@ -68,10 +68,10 @@ class Log_Integration {
 		// For FileV2, Legacy, and DB, we fall back to admin_footer above.
 		add_action( 'wc_logs_render_page', array( $this, 'render_analysis_results_mount' ) );
 
-		add_action( 'wp_ajax_ai_analyze_log', array( $this, 'handle_analyze_log' ) );
-		add_action( 'wp_ajax_nopriv_ai_analyze_log', array( $this, 'handle_nopriv' ) );
-		add_action( 'wp_ajax_ai_download_report', array( $this, 'handle_download_report' ) );
-		add_action( 'wp_ajax_nopriv_ai_download_report', array( $this, 'handle_nopriv' ) );
+		add_action( 'wp_ajax_ailwc_analyze_log', array( $this, 'handle_analyze_log' ) );
+		add_action( 'wp_ajax_nopriv_ailwc_analyze_log', array( $this, 'handle_nopriv' ) );
+		add_action( 'wp_ajax_ailwc_download_report', array( $this, 'handle_download_report' ) );
+		add_action( 'wp_ajax_nopriv_ailwc_download_report', array( $this, 'handle_nopriv' ) );
 	}
 
 	// -------------------------------------------------------------------------
@@ -93,7 +93,7 @@ class Log_Integration {
 			return;
 		}
 
-		$asset_file = AI_LOG_ANALYZER_PATH . 'build/analyze.asset.php';
+		$asset_file = AILWC_LOG_ANALYZER_PATH . 'build/analyze.asset.php';
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -102,28 +102,28 @@ class Log_Integration {
 		$asset = require $asset_file;
 
 		wp_enqueue_script(
-			'ai-log-analyzer-analyze',
-			AI_LOG_ANALYZER_URL . 'build/analyze.js',
+			'ailwc-log-analyzer-analyze',
+			AILWC_LOG_ANALYZER_URL . 'build/analyze.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true
 		);
 
-		if ( file_exists( AI_LOG_ANALYZER_PATH . 'build/analyze.css' ) ) {
+		if ( file_exists( AILWC_LOG_ANALYZER_PATH . 'build/analyze.css' ) ) {
 			wp_enqueue_style(
-				'ai-log-analyzer-analyze',
-				AI_LOG_ANALYZER_URL . 'build/analyze.css',
+				'ailwc-log-analyzer-analyze',
+				AILWC_LOG_ANALYZER_URL . 'build/analyze.css',
 				array(),
 				$asset['version']
 			);
 		}
 
 		wp_localize_script(
-			'ai-log-analyzer-analyze',
-			'aiLogAnalyzer',
+			'ailwc-log-analyzer-analyze',
+			'ailwcLogAnalyzer',
 			array(
 				'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
-				'nonce'        => wp_create_nonce( 'ai_analyze_log' ),
+				'nonce'        => wp_create_nonce( 'ailwc_analyze_log' ),
 				'hasConnector' => function_exists( 'wp_ai_client_prompt' ),
 				'i18n'         => array(
 					'analyzeButton' => __( 'Analyse with AI', 'ai-log-analyzer-for-woocommerce' ),
@@ -152,7 +152,7 @@ class Log_Integration {
 			return;
 		}
 
-		require_once AI_LOG_ANALYZER_PATH . 'admin/views/analysis-results.php';
+		require_once AILWC_LOG_ANALYZER_PATH . 'admin/views/analysis-results.php';
 	}
 
 	/**
@@ -163,7 +163,7 @@ class Log_Integration {
 	 * @return void
 	 */
 	public function render_analysis_results_mount( string $handler ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- $handler reserved for future custom-handler targeting.
-		require_once AI_LOG_ANALYZER_PATH . 'admin/views/analysis-results.php';
+		require_once AILWC_LOG_ANALYZER_PATH . 'admin/views/analysis-results.php';
 	}
 
 	// -------------------------------------------------------------------------
@@ -176,7 +176,7 @@ class Log_Integration {
 	 * @return void
 	 */
 	public function handle_analyze_log(): void {
-		check_ajax_referer( 'ai_analyze_log', 'nonce' );
+		check_ajax_referer( 'ailwc_analyze_log', 'nonce' );
 
 		if ( ! Plugin::current_user_can_analyze() ) {
 			wp_send_json_error(
@@ -234,7 +234,7 @@ class Log_Integration {
 	 * @return void
 	 */
 	public function handle_download_report(): void {
-		check_ajax_referer( 'ai_analyze_log', 'nonce' );
+		check_ajax_referer( 'ailwc_analyze_log', 'nonce' );
 
 		if ( ! Plugin::current_user_can_analyze() ) {
 			wp_send_json_error(
@@ -468,7 +468,7 @@ class Log_Integration {
 	 * @return string Possibly-truncated content.
 	 */
 	private function truncate_to_limit( string $content ): string {
-		$settings  = get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$settings  = get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$max_mb    = max( 1, (int) ( $settings['max_file_size_mb'] ?? 10 ) );
 		$max_bytes = $max_mb * 1024 * 1024;
 

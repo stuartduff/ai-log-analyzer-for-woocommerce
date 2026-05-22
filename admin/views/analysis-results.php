@@ -6,7 +6,7 @@
  * React app (build/analyze.js). The element is appended to admin_footer so
  * it is available regardless of which WC log handler is active.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

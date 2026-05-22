@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants referenced by class files under test.
-define( 'AI_LOG_ANALYZER_OPTION', 'ai_log_analyzer_settings' );
-define( 'AI_LOG_ANALYZER_PATH', dirname( __DIR__, 2 ) . '/' );
-define( 'AI_LOG_ANALYZER_URL', 'http://localhost/wp-content/plugins/wc-ai-log-analyzer/' );
-define( 'AI_LOG_ANALYZER_VERSION', '1.0.0' );
+define( 'AILWC_LOG_ANALYZER_OPTION', 'ailwc_log_analyzer_settings' );
+define( 'AILWC_LOG_ANALYZER_PATH', dirname( __DIR__, 2 ) . '/' );
+define( 'AILWC_LOG_ANALYZER_URL', 'http://localhost/wp-content/plugins/wc-ai-log-analyzer/' );
+define( 'AILWC_LOG_ANALYZER_VERSION', '1.0.0' );
 
 // Backing store for the get_option() stub — tests set entries here to control return values.
 $GLOBALS['test_options'] = array();

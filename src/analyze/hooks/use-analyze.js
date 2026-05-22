@@ -1,7 +1,7 @@
 /**
  * useAnalyze hook — manages analysis modal state and AJAX round-trip.
  *
- * Listens for the `aiLogAnalyzer:analyze` custom event (dispatched by the
+ * Listens for the `ailwcLogAnalyzer:analyze` custom event (dispatched by the
  * MutationObserver button injector in index.js) and drives the modal lifecycle.
  */
 
@@ -34,12 +34,12 @@ const DOWNLOAD_TIMEOUT_MS = 30_000;
 async function wpAjaxRaw( action, payload, signal ) {
 	const body = new URLSearchParams( {
 		action,
-		nonce: window.aiLogAnalyzer?.nonce ?? '',
+		nonce: window.ailwcLogAnalyzer?.nonce ?? '',
 		...payload,
 	} );
 
 	const response = await fetch(
-		window.aiLogAnalyzer?.ajaxUrl ?? '/wp-admin/admin-ajax.php',
+		window.ailwcLogAnalyzer?.ajaxUrl ?? '/wp-admin/admin-ajax.php',
 		{
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -106,7 +106,7 @@ export default function useAnalyze() {
 			ANALYZE_TIMEOUT_MS
 		);
 
-		wpAjaxRaw( 'ai_analyze_log', { file_id: id }, controller.signal )
+		wpAjaxRaw( 'ailwc_analyze_log', { file_id: id }, controller.signal )
 			.then( ( response ) => response.json() )
 			.then( ( response ) => {
 				if ( response?.success ) {
@@ -114,7 +114,7 @@ export default function useAnalyze() {
 				} else {
 					setError(
 						response?.data?.message ??
-							window.aiLogAnalyzer?.i18n?.error ??
+							window.ailwcLogAnalyzer?.i18n?.error ??
 							'An error occurred during analysis.'
 					);
 				}
@@ -131,7 +131,7 @@ export default function useAnalyze() {
 								'ai-log-analyzer-for-woocommerce'
 						  )
 						: err?.message ??
-								window.aiLogAnalyzer?.i18n?.error ??
+								window.ailwcLogAnalyzer?.i18n?.error ??
 								'An error occurred during analysis.'
 				);
 			} )
@@ -142,10 +142,10 @@ export default function useAnalyze() {
 	}, [] );
 
 	useEffect( () => {
-		document.addEventListener( 'aiLogAnalyzer:analyze', handleAnalyze );
+		document.addEventListener( 'ailwcLogAnalyzer:analyze', handleAnalyze );
 		return () => {
 			document.removeEventListener(
-				'aiLogAnalyzer:analyze',
+				'ailwcLogAnalyzer:analyze',
 				handleAnalyze
 			);
 		};
@@ -187,7 +187,7 @@ export default function useAnalyze() {
 
 		try {
 			const response = await wpAjaxRaw(
-				'ai_download_report',
+				'ailwc_download_report',
 				{ analysis_data: JSON.stringify( result ) },
 				controller.signal
 			);

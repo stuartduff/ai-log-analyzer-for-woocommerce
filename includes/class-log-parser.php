@@ -2,10 +2,10 @@
 /**
  * Log parser — sanitises log content before it is sent to the AI client.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer;
+namespace AILWC_Log_Analyzer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

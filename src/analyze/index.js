@@ -72,11 +72,11 @@ function createAnalyzeButton( fileId ) {
 	button.type = 'button';
 	button.className = `button button-secondary ${ BUTTON_CLASS }`;
 	button.textContent =
-		window.aiLogAnalyzer?.i18n?.analyzeButton ?? 'Analyse with AI';
+		window.ailwcLogAnalyzer?.i18n?.analyzeButton ?? 'Analyse with AI';
 
 	button.addEventListener( 'click', () => {
 		document.dispatchEvent(
-			new CustomEvent( 'aiLogAnalyzer:analyze', {
+			new CustomEvent( 'ailwcLogAnalyzer:analyze', {
 				bubbles: true,
 				detail: { fileId },
 			} )

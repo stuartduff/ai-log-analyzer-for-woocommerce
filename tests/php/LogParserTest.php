@@ -2,12 +2,12 @@
 /**
  * Unit tests for Log_Parser::sanitize_log_content().
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer\Tests;
+namespace AILWC_Log_Analyzer\Tests;
 
-use AI_Log_Analyzer\Log_Parser;
+use AILWC_Log_Analyzer\Log_Parser;
 use PHPUnit\Framework\TestCase;
 
 class LogParserTest extends TestCase {

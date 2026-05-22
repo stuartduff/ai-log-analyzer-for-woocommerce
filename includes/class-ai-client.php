@@ -2,10 +2,10 @@
 /**
  * AI client wrapper around wp_ai_client_prompt().
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer;
+namespace AILWC_Log_Analyzer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -82,7 +82,7 @@ class AI_Client {
 			);
 		}
 
-		$settings         = get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$settings         = get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$model_preference = $settings['model_preference'] ?? 'anthropic';
 		// Settings store temperature as 0–10 integer; API expects 0.0–1.0 float.
 		$temperature = ( (int) ( $settings['temperature'] ?? 3 ) ) / 10;

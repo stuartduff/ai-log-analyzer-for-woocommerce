@@ -2,7 +2,7 @@
 /**
  * Settings page template — WordPress Settings API form.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<form method="post" action="options.php">
 		<?php
-		settings_fields( 'ai_log_analyzer' );
-		do_settings_sections( 'ai_log_analyzer' );
+		settings_fields( 'ailwc_log_analyzer' );
+		do_settings_sections( 'ailwc_log_analyzer' );
 		submit_button( __( 'Save Settings', 'ai-log-analyzer-for-woocommerce' ) );
 		?>
 	</form>

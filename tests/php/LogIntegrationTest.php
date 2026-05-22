@@ -2,15 +2,15 @@
 /**
  * Unit tests for Log_Integration.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer\Tests;
+namespace AILWC_Log_Analyzer\Tests;
 
-use AI_Log_Analyzer\AI_Client;
-use AI_Log_Analyzer\Analysis_Engine;
-use AI_Log_Analyzer\Log_Integration;
-use AI_Log_Analyzer\Log_Parser;
+use AILWC_Log_Analyzer\AI_Client;
+use AILWC_Log_Analyzer\Analysis_Engine;
+use AILWC_Log_Analyzer\Log_Integration;
+use AILWC_Log_Analyzer\Log_Parser;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -32,7 +32,7 @@ class LogIntegrationTest extends TestCase {
 
 	protected function tearDown(): void {
 		// Clean up any test_options set during tests.
-		unset( $GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] );
+		unset( $GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] );
 	}
 
 	// -------------------------------------------------------------------------
@@ -80,7 +80,7 @@ class LogIntegrationTest extends TestCase {
 	// -------------------------------------------------------------------------
 
 	public function test_truncate_to_limit_returns_content_unchanged_when_under_limit(): void {
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
 		$integration = $this->make_integration();
 		$content     = str_repeat( 'a', 100 );
 		$result      = $this->call_private( $integration, 'truncate_to_limit', [ $content ] );
@@ -88,7 +88,7 @@ class LogIntegrationTest extends TestCase {
 	}
 
 	public function test_truncate_to_limit_returns_content_unchanged_at_exact_limit(): void {
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
 		$integration = $this->make_integration();
 		$max_bytes   = 1 * 1024 * 1024;
 		$content     = str_repeat( 'x', $max_bytes );
@@ -97,7 +97,7 @@ class LogIntegrationTest extends TestCase {
 	}
 
 	public function test_truncate_to_limit_truncates_content_over_limit(): void {
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
 		$integration = $this->make_integration();
 		$max_bytes   = 1 * 1024 * 1024;
 		$content     = str_repeat( 'x', $max_bytes + 1000 );
@@ -106,7 +106,7 @@ class LogIntegrationTest extends TestCase {
 	}
 
 	public function test_truncate_to_limit_preserves_most_recent_tail(): void {
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
 		$integration = $this->make_integration();
 		$max_bytes   = 1 * 1024 * 1024;
 		// Padding is exactly max_bytes, then a newline and a sentinel tail line.
@@ -117,7 +117,7 @@ class LogIntegrationTest extends TestCase {
 	}
 
 	public function test_truncate_to_limit_skips_partial_first_line_after_truncation(): void {
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = [ 'max_file_size_mb' => 1 ];
 		$integration = $this->make_integration();
 		$max_bytes   = 1 * 1024 * 1024;
 		// After substr(-max_bytes), the tail starts with the end of a long line

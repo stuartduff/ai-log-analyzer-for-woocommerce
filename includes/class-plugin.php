@@ -2,10 +2,10 @@
 /**
  * Core plugin class.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer;
+namespace AILWC_Log_Analyzer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -172,7 +172,7 @@ class Plugin {
 			return true;
 		}
 
-		$settings            = get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$settings            = get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$allow_shop_managers = ! empty( $settings['allow_shop_managers'] );
 
 		return $allow_shop_managers;

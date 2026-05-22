@@ -2,12 +2,12 @@
 /**
  * Unit tests for Plugin::current_user_can_analyze().
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer\Tests;
+namespace AILWC_Log_Analyzer\Tests;
 
-use AI_Log_Analyzer\Plugin;
+use AILWC_Log_Analyzer\Plugin;
 use PHPUnit\Framework\TestCase;
 
 class PluginTest extends TestCase {
@@ -64,7 +64,7 @@ class PluginTest extends TestCase {
 
 	public function test_returns_false_for_shop_manager_when_setting_disabled(): void {
 		$this->set_caps( array( 'manage_woocommerce' => true ) );
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = array( 'allow_shop_managers' => false );
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = array( 'allow_shop_managers' => false );
 		$this->assertFalse( Plugin::current_user_can_analyze() );
 	}
 
@@ -75,7 +75,7 @@ class PluginTest extends TestCase {
 
 	public function test_returns_true_for_shop_manager_when_setting_enabled(): void {
 		$this->set_caps( array( 'manage_woocommerce' => true ) );
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = array( 'allow_shop_managers' => true );
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = array( 'allow_shop_managers' => true );
 		$this->assertTrue( Plugin::current_user_can_analyze() );
 	}
 }

@@ -2,10 +2,10 @@
 /**
  * Admin interface — settings page registration using the WordPress Settings API.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer;
+namespace AILWC_Log_Analyzer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -33,8 +33,8 @@ class Admin_Interface {
 	 */
 	public function register_settings(): void {
 		register_setting(
-			'ai_log_analyzer',
-			AI_LOG_ANALYZER_OPTION,
+			'ailwc_log_analyzer',
+			AILWC_LOG_ANALYZER_OPTION,
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_settings' ),
 				'default'           => array(
@@ -51,14 +51,14 @@ class Admin_Interface {
 			'ai_log_analyzer_analysis',
 			__( 'Analysis', 'ai-log-analyzer-for-woocommerce' ),
 			'__return_false',
-			'ai_log_analyzer'
+			'ailwc_log_analyzer'
 		);
 
 		add_settings_field(
 			'model_preference',
 			__( 'AI Model Preference', 'ai-log-analyzer-for-woocommerce' ),
 			array( $this, 'render_model_preference_field' ),
-			'ai_log_analyzer',
+			'ailwc_log_analyzer',
 			'ai_log_analyzer_analysis'
 		);
 
@@ -66,7 +66,7 @@ class Admin_Interface {
 			'temperature',
 			__( 'Temperature (0–10)', 'ai-log-analyzer-for-woocommerce' ),
 			array( $this, 'render_temperature_field' ),
-			'ai_log_analyzer',
+			'ailwc_log_analyzer',
 			'ai_log_analyzer_analysis'
 		);
 
@@ -75,14 +75,14 @@ class Admin_Interface {
 			'ai_log_analyzer_limits',
 			__( 'Limits &amp; Permissions', 'ai-log-analyzer-for-woocommerce' ),
 			'__return_false',
-			'ai_log_analyzer'
+			'ailwc_log_analyzer'
 		);
 
 		add_settings_field(
 			'max_file_size_mb',
 			__( 'Maximum File Size (MB)', 'ai-log-analyzer-for-woocommerce' ),
 			array( $this, 'render_max_file_size_field' ),
-			'ai_log_analyzer',
+			'ailwc_log_analyzer',
 			'ai_log_analyzer_limits'
 		);
 
@@ -90,7 +90,7 @@ class Admin_Interface {
 			'allow_shop_managers',
 			__( 'Allow Shop Managers', 'ai-log-analyzer-for-woocommerce' ),
 			array( $this, 'render_allow_shop_managers_field' ),
-			'ai_log_analyzer',
+			'ailwc_log_analyzer',
 			'ai_log_analyzer_limits'
 		);
 	}
@@ -102,7 +102,7 @@ class Admin_Interface {
 	 * @return array Sanitized settings.
 	 */
 	public function sanitize_settings( mixed $input ): array {
-		$current   = (array) get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$current   = (array) get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$sanitized = $current;
 
 		if ( isset( $input['model_preference'] ) ) {
@@ -137,10 +137,10 @@ class Admin_Interface {
 	 * @return void
 	 */
 	public function render_model_preference_field(): void {
-		$options = (array) get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$options = (array) get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$current = $options['model_preference'] ?? 'anthropic';
 		$choices = $this->get_available_providers();
-		$name    = AI_LOG_ANALYZER_OPTION . '[model_preference]';
+		$name    = AILWC_LOG_ANALYZER_OPTION . '[model_preference]';
 
 		foreach ( $choices as $value => $label ) {
 			printf(
@@ -243,9 +243,9 @@ class Admin_Interface {
 	 * @return void
 	 */
 	public function render_temperature_field(): void {
-		$options = (array) get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$options = (array) get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$value   = $options['temperature'] ?? 3;
-		$name    = AI_LOG_ANALYZER_OPTION . '[temperature]';
+		$name    = AILWC_LOG_ANALYZER_OPTION . '[temperature]';
 
 		printf(
 			'<input type="number" name="%s" value="%s" min="0" max="10" step="1" class="small-text">',
@@ -261,9 +261,9 @@ class Admin_Interface {
 	 * @return void
 	 */
 	public function render_max_file_size_field(): void {
-		$options = (array) get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$options = (array) get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$value   = $options['max_file_size_mb'] ?? 10;
-		$name    = AI_LOG_ANALYZER_OPTION . '[max_file_size_mb]';
+		$name    = AILWC_LOG_ANALYZER_OPTION . '[max_file_size_mb]';
 
 		printf(
 			'<input type="number" name="%s" value="%s" min="1" max="50" step="1" class="small-text">',
@@ -279,9 +279,9 @@ class Admin_Interface {
 	 * @return void
 	 */
 	public function render_allow_shop_managers_field(): void {
-		$options = (array) get_option( AI_LOG_ANALYZER_OPTION, array() );
+		$options = (array) get_option( AILWC_LOG_ANALYZER_OPTION, array() );
 		$checked = ! empty( $options['allow_shop_managers'] );
-		$name    = AI_LOG_ANALYZER_OPTION . '[allow_shop_managers]';
+		$name    = AILWC_LOG_ANALYZER_OPTION . '[allow_shop_managers]';
 
 		printf(
 			'<label><input type="checkbox" name="%s" value="1"%s> %s</label>',
@@ -313,6 +313,6 @@ class Admin_Interface {
 	 * @return void
 	 */
 	public function render_settings_page(): void {
-		require_once AI_LOG_ANALYZER_PATH . 'admin/views/settings-page.php';
+		require_once AILWC_LOG_ANALYZER_PATH . 'admin/views/settings-page.php';
 	}
 }

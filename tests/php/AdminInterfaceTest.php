@@ -2,12 +2,12 @@
 /**
  * Unit tests for Admin_Interface::sanitize_settings().
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer\Tests;
+namespace AILWC_Log_Analyzer\Tests;
 
-use AI_Log_Analyzer\Admin_Interface;
+use AILWC_Log_Analyzer\Admin_Interface;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -18,11 +18,11 @@ class AdminInterfaceTest extends TestCase {
 	protected function setUp(): void {
 		$this->admin = new Admin_Interface();
 		// Ensure no stale current settings bleed between tests.
-		unset( $GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] );
+		unset( $GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] );
 	}
 
 	protected function tearDown(): void {
-		unset( $GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] );
+		unset( $GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] );
 	}
 
 	// -------------------------------------------------------------------------
@@ -63,7 +63,7 @@ class AdminInterfaceTest extends TestCase {
 	}
 
 	public function test_sanitize_settings_preserves_current_model_when_invalid_value_submitted(): void {
-		$GLOBALS['test_options'][ AI_LOG_ANALYZER_OPTION ] = [ 'model_preference' => 'google' ];
+		$GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] = [ 'model_preference' => 'google' ];
 		$result = $this->admin->sanitize_settings( [ 'model_preference' => 'invalid' ] );
 		$this->assertSame( 'google', $result['model_preference'] );
 	}

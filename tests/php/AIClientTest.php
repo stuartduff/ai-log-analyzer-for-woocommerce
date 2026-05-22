@@ -2,12 +2,12 @@
 /**
  * Unit tests for AI_Client prompt-building methods.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer\Tests;
+namespace AILWC_Log_Analyzer\Tests;
 
-use AI_Log_Analyzer\AI_Client;
+use AILWC_Log_Analyzer\AI_Client;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 

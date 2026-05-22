@@ -2,10 +2,10 @@
 /**
  * Analysis engine — pre-processes log content and orchestrates AI client calls.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer;
+namespace AILWC_Log_Analyzer;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -168,7 +168,7 @@ class Analysis_Engine {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		$plugins_dir = trailingslashit( dirname( dirname( AI_LOG_ANALYZER_FILE ) ) );
+		$plugins_dir = trailingslashit( dirname( dirname( AILWC_LOG_ANALYZER_FILE ) ) );
 		$data        = array();
 
 		foreach ( $plugin_files as $plugin_file ) {

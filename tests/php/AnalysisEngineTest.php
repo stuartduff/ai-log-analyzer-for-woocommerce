@@ -2,13 +2,13 @@
 /**
  * Unit tests for Analysis_Engine.
  *
- * @package AI_Log_Analyzer
+ * @package AILWC_Log_Analyzer
  */
 
-namespace AI_Log_Analyzer\Tests;
+namespace AILWC_Log_Analyzer\Tests;
 
-use AI_Log_Analyzer\AI_Client;
-use AI_Log_Analyzer\Analysis_Engine;
+use AILWC_Log_Analyzer\AI_Client;
+use AILWC_Log_Analyzer\Analysis_Engine;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
