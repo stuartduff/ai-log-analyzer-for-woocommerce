@@ -15,10 +15,10 @@ Received: 22 May 2026
 
 ## Issue 2 — No publicly documented resource for compiled/minified JS
 
-- [ ] Add a `== Source Code ==` (or similar) section to `readme.txt` that links to the public GitHub repository where the unminified source lives.
+- [x] Add a `== Source Code ==` (or similar) section to `readme.txt` that links to the public GitHub repository where the unminified source lives.
   - The reviewer flagged `build/analyze.js` as minified/compiled with no accompanying source.
   - The link must point to a **publicly accessible** repository — the reviewer will check.
-- [ ] Include build instructions in the readme (or in the repo) so future developers know how to rebuild the assets (e.g. `npm install && npm run build`).
+- [x] Include build instructions in the readme (or in the repo) so future developers know how to rebuild the assets (e.g. `npm install && npm run build`).
 
 ---
 

@@ -66,6 +66,21 @@ Log files larger than the configured maximum size (default 10 MB) are automatica
 1. The AI analysis modal showing a severity notice, cause summary, and step-by-step fix instructions.
 2. The settings page with model preference, temperature, and permissions controls.
 
+== Source Code ==
+
+The full source code for this plugin, including all unminified JavaScript, is publicly available on GitHub:
+
+https://github.com/stuartduff/ai-log-analyzer-for-woocommerce
+
+The minified file `build/analyze.js` is compiled from `src/analyze/index.js` using `@wordpress/scripts` (webpack).
+
+To build the assets yourself:
+
+1. Clone the repository: `git clone https://github.com/stuartduff/ai-log-analyzer-for-woocommerce.git`
+2. Install Node dependencies: `npm install`
+3. Build for production: `npm run build`
+4. Or watch for development: `npm run start`
+
 == Changelog ==
 
 = 1.0.0 =
