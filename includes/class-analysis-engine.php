@@ -156,7 +156,7 @@ class Analysis_Engine {
 	 * Calls get_plugin_data() for each identified plugin to retrieve authoritative
 	 * metadata (name, Plugin URI, author, Author URI) from the plugin's file header.
 	 *
-	 * @param string[] $plugin_files Plugin file paths relative to WP_PLUGIN_DIR.
+	 * @param string[] $plugin_files Plugin file paths relative to the plugins directory.
 	 * @return array[] List of plugin data arrays, each containing: slug, name, plugin_uri, author, author_uri.
 	 */
 	private function get_plugins_support_data( array $plugin_files ): array {
@@ -168,10 +168,11 @@ class Analysis_Engine {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		$data = array();
+		$plugins_dir = trailingslashit( dirname( dirname( AI_LOG_ANALYZER_FILE ) ) );
+		$data        = array();
 
 		foreach ( $plugin_files as $plugin_file ) {
-			$full_path   = WP_PLUGIN_DIR . '/' . $plugin_file;
+			$full_path   = $plugins_dir . $plugin_file;
 			$plugin_data = get_plugin_data( $full_path, false, false );
 			$slug        = dirname( $plugin_file );
 

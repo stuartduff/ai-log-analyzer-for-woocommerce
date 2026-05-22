@@ -47,16 +47,8 @@ All styles that apply to WordPress admin pages are correctly enqueued via `wp_en
 
 ## Issue 5 — Hardcoded `WP_PLUGIN_DIR` constant for path resolution
 
-- [ ] Replace the usage at `includes/class-analysis-engine.php:174`:
-  ```php
-  // Before
-  $full_path = WP_PLUGIN_DIR . '/' . $plugin_file;
-
-  // After — use the plugin's own defined constant (already defined in the main file)
-  $full_path = AI_LOG_ANALYZER_PATH . $plugin_file;
-  // or, if $plugin_file is relative to the plugins root, use plugins_url() / plugin_dir_path()
-  ```
-- [ ] Audit the rest of the codebase for any other direct use of `WP_PLUGIN_DIR`, `WP_CONTENT_DIR`, or similar raw constants and replace them with `plugin_dir_path()` / `plugin_dir_url()` calls or the constants already defined in the main plugin file.
+- [x] Replace `WP_PLUGIN_DIR . '/' . $plugin_file` at `includes/class-analysis-engine.php:174` with `trailingslashit( dirname( dirname( AI_LOG_ANALYZER_FILE ) ) ) . $plugin_file` — derives the plugins directory from the plugin's own `__FILE__`-based constant instead of the raw WP constant.
+- [x] Audited the full codebase — no other raw `WP_PLUGIN_DIR`, `WP_CONTENT_DIR`, or similar constants found outside of tests/vendor. (`ABSPATH` used for the core include at line 168 is universally acceptable.)
 
 ---
 
