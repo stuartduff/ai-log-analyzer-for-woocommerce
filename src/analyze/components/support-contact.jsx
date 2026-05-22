@@ -35,7 +35,7 @@ export default function SupportContact( { contact, contactUrl } ) {
 					rel="noopener noreferrer"
 				>
 					{ __(
-						'Visit Support Page',
+						'Contact Support',
 						'ai-log-analyzer-for-woocommerce'
 					) }
 				</Button>
