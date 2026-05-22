@@ -24,21 +24,24 @@ Received: 22 May 2026
 
 ## Issue 3 — Inline `<style>` tag instead of `wp_enqueue_style()`
 
-- [ ] Remove the raw `<style>` block at `includes/class-log-integration.php:573`.
-- [ ] Extract those styles into a separate CSS file and enqueue it with `wp_enqueue_style()` (or `wp_add_inline_style()` if they must be dynamic) hooked on `admin_enqueue_scripts`.
+**Clarification for reviewer (likely a false positive):**
+
+The `<style>` block at `includes/class-log-integration.php:573` is not injected into a WordPress admin page. It is part of a self-contained HTML string returned as a **downloadable diagnostic report** (the "Download Report" feature). The HTML document is served as a file download and is never rendered inside WordPress.
+
+Inline styles are the correct and only practical approach for a standalone HTML document — the same pattern used by HTML email templates — because the document has no access to WordPress-enqueued stylesheets.
+
+All styles that apply to WordPress admin pages are correctly enqueued via `wp_enqueue_style()` on the `admin_enqueue_scripts` hook and compiled from `src/analyze/index.scss`.
+
+- [x] ~~Remove the raw `<style>` block~~ — not applicable; this is a self-contained HTML download, not a WordPress page injection. Will clarify with reviewer.
 
 ---
 
 ## Issue 4 — Undocumented use of third-party / external services
 
-- [ ] Add an `== External Services ==` section to `readme.txt` that covers every AI provider the plugin can send data to via the WordPress AI Client.
-  - For **each** provider, document:
-    1. What the service is and what it is used for.
-    2. What data is sent (log file content) and when (on user-initiated analysis).
-    3. A link to the service's **Terms of Service**.
-    4. A link to the service's **Privacy Policy**.
-  - At minimum, document the providers currently selectable in settings (e.g. Anthropic, OpenAI, and any others).
-  - Verify every ToS/Privacy link is live and contains the correct content — the reviewer will check.
+- [x] Add an `== External Services ==` section to `readme.txt` covering Anthropic, Google (Gemini), and OpenAI.
+  - Documents what each service is used for, what data is sent, when it is sent, and data retention.
+  - Includes ToS and Privacy Policy links for all three providers.
+  - **Before resubmitting: verify all six policy URLs are live and point to the correct content — the reviewer will check them.**
 
 ---
 

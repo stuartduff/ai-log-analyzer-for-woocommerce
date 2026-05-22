@@ -66,6 +66,33 @@ Log files larger than the configured maximum size (default 10 MB) are automatica
 1. The AI analysis modal showing a severity notice, cause summary, and step-by-step fix instructions.
 2. The settings page with model preference, temperature, and permissions controls.
 
+== External Services ==
+
+This plugin sends WooCommerce log file content to a third-party AI provider for analysis. This happens only when a logged-in user with the appropriate capability clicks the "Analyse with AI" button on a WooCommerce log file.
+
+Requests are made through the **WordPress AI Connectors API** (introduced in WordPress 7.0). The specific provider used depends on which connector the site administrator has configured in **Settings › Connectors**. The following providers are currently supported:
+
+**Anthropic (Claude)**
+Log content is sent to Anthropic's API to generate a plain-English analysis of the log file.
+- Terms of Service: https://www.anthropic.com/legal/aup
+- Privacy Policy: https://www.anthropic.com/legal/privacy
+
+**Google (Gemini)**
+Log content is sent to Google's Gemini API to generate a plain-English analysis of the log file.
+- Terms of Service: https://ai.google.dev/gemini-api/terms
+- Privacy Policy: https://policies.google.com/privacy
+
+**OpenAI (GPT)**
+Log content is sent to OpenAI's API to generate a plain-English analysis of the log file.
+- Terms of Service: https://openai.com/policies/terms-of-use
+- Privacy Policy: https://openai.com/policies/privacy-policy
+
+**What data is sent:** The contents of the selected WooCommerce log file, along with site context (WordPress version, WooCommerce version, PHP version, active theme, and active plugin names). Before transmission, the plugin automatically strips common patterns of sensitive data including API keys, passwords, auth tokens, email addresses, HTTP Authorization headers, DSN credentials, and PEM-encoded private keys.
+
+**When data is sent:** Only when a user with the required capability explicitly clicks "Analyse with AI". No data is sent automatically or in the background.
+
+**Data retention:** This plugin does not store or cache log content. Retention of data submitted to the AI provider is governed by the respective provider's privacy policy linked above.
+
 == Source Code ==
 
 The full source code for this plugin, including all unminified JavaScript, is publicly available on GitHub:
