@@ -19,10 +19,14 @@ class AdminInterfaceTest extends TestCase {
 		$this->admin = new Admin_Interface();
 		// Ensure no stale current settings bleed between tests.
 		unset( $GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] );
+		$GLOBALS['test_connectors']     = array();
+		$GLOBALS['test_active_plugins'] = array();
 	}
 
 	protected function tearDown(): void {
 		unset( $GLOBALS['test_options'][ AILWC_LOG_ANALYZER_OPTION ] );
+		$GLOBALS['test_connectors']     = array();
+		$GLOBALS['test_active_plugins'] = array();
 	}
 
 	// -------------------------------------------------------------------------
@@ -147,7 +151,7 @@ class AdminInterfaceTest extends TestCase {
 	}
 
 	// -------------------------------------------------------------------------
-	// connector_has_api_key
+	// get_available_providers
 	// -------------------------------------------------------------------------
 
 	private function call_private( string $method, array $args = [] ): mixed {
@@ -156,79 +160,80 @@ class AdminInterfaceTest extends TestCase {
 		return $ref->invokeArgs( $this->admin, $args );
 	}
 
-	public function test_connector_has_api_key_returns_true_when_method_is_not_api_key(): void {
-		// Non-api_key auth methods (e.g. OAuth) are assumed to be configured externally.
-		$result = $this->call_private( 'connector_has_api_key', [ [ 'method' => 'oauth' ] ] );
-		$this->assertTrue( $result );
+	public function test_get_available_providers_returns_empty_when_connectors_api_present_but_none_connected(): void {
+		// wp_get_connectors() is stubbed and returns no connectors.
+		$result = $this->call_private( 'get_available_providers' );
+
+		$this->assertSame( array(), $result );
 	}
 
-	public function test_connector_has_api_key_returns_false_when_all_sources_empty(): void {
-		$auth   = [ 'method' => 'api_key' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		$this->assertFalse( $result );
+	public function test_get_available_providers_includes_only_active_plugin_connectors_without_reading_api_key_option(): void {
+		$GLOBALS['test_connectors']     = array(
+			'anthropic' => array(
+				'type'           => 'ai_provider',
+				'authentication' => array(
+					'method'       => 'api_key',
+					'setting_name' => 'connectors_ai_anthropic_api_key',
+				),
+				'plugin'         => array( 'file' => 'ai-provider-for-anthropic/plugin.php' ),
+			),
+			'google'    => array(
+				'type'           => 'ai_provider',
+				'authentication' => array(
+					'method'       => 'api_key',
+					'setting_name' => 'connectors_ai_google_api_key',
+				),
+				'plugin'         => array( 'file' => 'ai-provider-for-google/plugin.php' ),
+			),
+		);
+		$GLOBALS['test_active_plugins'] = array( 'ai-provider-for-anthropic/plugin.php' );
+
+		$result = $this->call_private( 'get_available_providers' );
+
+		$this->assertSame( array( 'anthropic' => 'Anthropic' ), $result );
 	}
 
-	public function test_connector_has_api_key_returns_true_when_env_var_is_set(): void {
-		putenv( 'TEST_CONNECTOR_KEY_PRESENT=sk_live_abc123' );
-		$auth   = [ 'method' => 'api_key', 'env_var_name' => 'TEST_CONNECTOR_KEY_PRESENT' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		putenv( 'TEST_CONNECTOR_KEY_PRESENT' );
-		$this->assertTrue( $result );
+	public function test_get_available_providers_skips_connector_without_plugin_file(): void {
+		$GLOBALS['test_connectors'] = array(
+			'openai' => array(
+				'type'           => 'ai_provider',
+				'authentication' => array( 'method' => 'api_key' ),
+			),
+		);
+
+		$result = $this->call_private( 'get_available_providers' );
+
+		$this->assertSame( array(), $result );
 	}
 
-	public function test_connector_has_api_key_returns_false_when_env_var_is_empty_string(): void {
-		putenv( 'TEST_CONNECTOR_KEY_EMPTY=' );
-		$auth   = [ 'method' => 'api_key', 'env_var_name' => 'TEST_CONNECTOR_KEY_EMPTY' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		putenv( 'TEST_CONNECTOR_KEY_EMPTY' );
-		$this->assertFalse( $result );
+	public function test_get_available_providers_ignores_unknown_or_non_ai_connectors(): void {
+		$GLOBALS['test_connectors']     = array(
+			'custom_ai' => array(
+				'type'   => 'ai_provider',
+				'plugin' => array( 'file' => 'custom-ai/plugin.php' ),
+			),
+			'openai'    => array(
+				'type'   => 'payment_gateway',
+				'plugin' => array( 'file' => 'some-gateway/plugin.php' ),
+			),
+		);
+		$GLOBALS['test_active_plugins'] = array( 'custom-ai/plugin.php', 'some-gateway/plugin.php' );
+
+		$result = $this->call_private( 'get_available_providers' );
+
+		$this->assertSame( array(), $result );
 	}
 
-	public function test_connector_has_api_key_returns_false_when_env_var_does_not_exist(): void {
-		$auth   = [ 'method' => 'api_key', 'env_var_name' => 'TEST_CONNECTOR_KEY_UNDEFINED_XYZ' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		$this->assertFalse( $result );
-	}
+	public function test_get_known_providers_returns_all_three(): void {
+		$result = $this->call_private( 'get_known_providers' );
 
-	public function test_connector_has_api_key_returns_true_when_constant_defined_with_value(): void {
-		define( 'TEST_CONNECTOR_CONST_VALID', 'sk_live_abc123' );
-		$auth   = [ 'method' => 'api_key', 'constant_name' => 'TEST_CONNECTOR_CONST_VALID' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		$this->assertTrue( $result );
-	}
-
-	public function test_connector_has_api_key_returns_false_when_constant_defined_as_empty_string(): void {
-		define( 'TEST_CONNECTOR_CONST_EMPTY', '' );
-		$auth   = [ 'method' => 'api_key', 'constant_name' => 'TEST_CONNECTOR_CONST_EMPTY' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		$this->assertFalse( $result );
-	}
-
-	public function test_connector_has_api_key_returns_false_when_constant_not_defined(): void {
-		$auth   = [ 'method' => 'api_key', 'constant_name' => 'TEST_CONNECTOR_CONST_NEVER_DEFINED' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		$this->assertFalse( $result );
-	}
-
-	public function test_connector_has_api_key_returns_true_when_db_option_has_value(): void {
-		$GLOBALS['test_options']['anthropic_api_key'] = 'sk_ant_abc123';
-		$auth   = [ 'method' => 'api_key', 'setting_name' => 'anthropic_api_key' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		unset( $GLOBALS['test_options']['anthropic_api_key'] );
-		$this->assertTrue( $result );
-	}
-
-	public function test_connector_has_api_key_returns_false_when_db_option_is_empty(): void {
-		$GLOBALS['test_options']['anthropic_api_key_empty'] = '';
-		$auth   = [ 'method' => 'api_key', 'setting_name' => 'anthropic_api_key_empty' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		unset( $GLOBALS['test_options']['anthropic_api_key_empty'] );
-		$this->assertFalse( $result );
-	}
-
-	public function test_connector_has_api_key_returns_false_when_db_option_not_set(): void {
-		$auth   = [ 'method' => 'api_key', 'setting_name' => 'nonexistent_api_key_option' ];
-		$result = $this->call_private( 'connector_has_api_key', [ $auth ] );
-		$this->assertFalse( $result );
+		$this->assertSame(
+			array(
+				'anthropic' => 'Anthropic',
+				'google'    => 'Google',
+				'openai'    => 'OpenAI',
+			),
+			$result
+		);
 	}
 }

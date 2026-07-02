@@ -106,7 +106,7 @@ class Admin_Interface {
 		$sanitized = $current;
 
 		if ( isset( $input['model_preference'] ) ) {
-			$allowed = array_keys( $this->get_available_providers() );
+			$allowed = array_keys( $this->get_known_providers() );
 			$value   = sanitize_text_field( wp_unslash( $input['model_preference'] ) );
 			if ( in_array( $value, $allowed, true ) ) {
 				$sanitized['model_preference'] = $value;
@@ -130,9 +130,9 @@ class Admin_Interface {
 	/**
 	 * Renders the AI Model Preference radio buttons.
 	 *
-	 * Only providers that are both active and have an API key configured in
-	 * the WordPress Connectors settings are shown. Falls back to all three
-	 * choices when the Connectors API is unavailable (pre-WP 7.0).
+	 * On WordPress 7.0+ only providers whose connector plugin is active are
+	 * shown; when none are connected, a prompt to manage connectors is shown
+	 * instead. On older installs (no Connectors API) all three choices render.
 	 *
 	 * @return void
 	 */
@@ -141,6 +141,16 @@ class Admin_Interface {
 		$current = $options['model_preference'] ?? 'anthropic';
 		$choices = $this->get_available_providers();
 		$name    = AILWC_LOG_ANALYZER_OPTION . '[model_preference]';
+
+		if ( empty( $choices ) ) {
+			printf(
+				'<p class="description">%s <a href="%s">%s</a></p>',
+				esc_html__( 'No AI providers are connected yet. Connect one to run analysis.', 'ai-log-analyzer-for-woocommerce' ),
+				esc_url( admin_url( 'options-connectors.php' ) ),
+				esc_html__( 'Manage connectors', 'ai-log-analyzer-for-woocommerce' )
+			);
+			return;
+		}
 
 		foreach ( $choices as $value => $label ) {
 			printf(
@@ -155,7 +165,7 @@ class Admin_Interface {
 		if ( function_exists( 'wp_get_connectors' ) ) {
 			printf(
 				'<p class="description">%s <a href="%s">%s</a></p>',
-				esc_html__( 'Only connected providers are shown.', 'ai-log-analyzer-for-woocommerce' ),
+				esc_html__( 'Only connected AI providers are shown.', 'ai-log-analyzer-for-woocommerce' ),
 				esc_url( admin_url( 'options-connectors.php' ) ),
 				esc_html__( 'Manage connectors', 'ai-log-analyzer-for-woocommerce' )
 			);
@@ -163,78 +173,83 @@ class Admin_Interface {
 	}
 
 	/**
-	 * Returns AI providers that are active and have an API key configured.
+	 * Returns the full set of AI providers this plugin can request.
 	 *
-	 * Uses the WordPress Connectors API (WP 7.0+) when available. Falls back
-	 * to all three hardcoded choices on older WordPress installs.
+	 * Used for saving/validating the model preference regardless of which
+	 * connectors are currently active.
 	 *
-	 * @return array<string, string> Slug-to-label map of available providers.
+	 * @return array<string, string> Slug-to-label map of known providers.
 	 */
-	private function get_available_providers(): array {
-		$all = array(
+	private function get_known_providers(): array {
+		return array(
 			'anthropic' => __( 'Anthropic', 'ai-log-analyzer-for-woocommerce' ),
 			'google'    => __( 'Google', 'ai-log-analyzer-for-woocommerce' ),
 			'openai'    => __( 'OpenAI', 'ai-log-analyzer-for-woocommerce' ),
 		);
-
-		if ( ! function_exists( 'wp_get_connectors' ) ) {
-			return $all;
-		}
-
-		$available = array();
-		foreach ( wp_get_connectors() as $id => $connector ) {
-			if ( 'ai_provider' !== $connector['type'] ) {
-				continue;
-			}
-			if ( ! isset( $all[ $id ] ) ) {
-				continue;
-			}
-			if ( ! call_user_func( $connector['plugin']['is_active'] ) ) {
-				continue;
-			}
-			if ( $this->connector_has_api_key( $connector['authentication'] ) ) {
-				$available[ $id ] = $all[ $id ];
-			}
-		}
-
-		return ! empty( $available ) ? $available : $all;
 	}
 
 	/**
-	 * Checks whether a connector's authentication data resolves to a non-empty key.
+	 * Returns AI providers whose connector plugin is currently active.
 	 *
-	 * Mirrors the precedence order used by WordPress core: env var → constant → DB.
+	 * Uses the WordPress Connectors API (WP 7.0+) when available and reports
+	 * only providers whose associated connector plugin is active. Returns an
+	 * empty array when the API is available but nothing is connected. Falls
+	 * back to all known providers on older WordPress installs.
 	 *
-	 * @param array $auth Connector authentication array from wp_get_connectors().
+	 * @return array<string, string> Slug-to-label map of available providers.
+	 */
+	private function get_available_providers(): array {
+		$known = $this->get_known_providers();
+
+		if ( ! function_exists( 'wp_get_connectors' ) ) {
+			return $known;
+		}
+
+		$available = array();
+		foreach ( \wp_get_connectors() as $id => $connector ) {
+			if ( 'ai_provider' !== ( $connector['type'] ?? '' ) ) {
+				continue;
+			}
+			if ( ! isset( $known[ $id ] ) ) {
+				continue;
+			}
+			if ( ! $this->connector_plugin_is_active( $connector ) ) {
+				continue;
+			}
+
+			$available[ $id ] = $known[ $id ];
+		}
+
+		return $available;
+	}
+
+	/**
+	 * Determines whether a connector's associated plugin is active.
+	 *
+	 * The Connectors API exposes the provider plugin as a `plugin.file` path
+	 * relative to the plugins directory. This never reads connector secrets.
+	 *
+	 * @param array $connector Connector data from wp_get_connectors().
 	 * @return bool
 	 */
-	private function connector_has_api_key( array $auth ): bool {
-		if ( 'api_key' !== ( $auth['method'] ?? '' ) ) {
-			return true;
+	private function connector_plugin_is_active( array $connector ): bool {
+		$plugin_file = $connector['plugin']['file'] ?? '';
+		if ( ! is_string( $plugin_file ) || '' === $plugin_file ) {
+			return false;
 		}
 
-		if ( ! empty( $auth['env_var_name'] ) ) {
-			$env = getenv( $auth['env_var_name'] );
-			if ( false !== $env && '' !== $env ) {
-				return true;
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			$plugin_functions = ABSPATH . 'wp-admin/includes/plugin.php';
+			if ( is_readable( $plugin_functions ) ) {
+				require_once $plugin_functions;
 			}
 		}
 
-		if ( ! empty( $auth['constant_name'] ) && defined( $auth['constant_name'] ) ) {
-			$value = constant( $auth['constant_name'] );
-			if ( is_string( $value ) && '' !== $value ) {
-				return true;
-			}
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			return false;
 		}
 
-		if ( ! empty( $auth['setting_name'] ) ) {
-			$db_value = get_option( $auth['setting_name'], '' );
-			if ( '' !== $db_value ) {
-				return true;
-			}
-		}
-
-		return false;
+		return is_plugin_active( $plugin_file );
 	}
 
 	/**

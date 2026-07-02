@@ -20,6 +20,12 @@ define( 'AILWC_LOG_ANALYZER_VERSION', '1.0.0' );
 // Backing store for the get_option() stub — tests set entries here to control return values.
 $GLOBALS['test_options'] = array();
 
+// Backing store for the wp_get_connectors() stub.
+$GLOBALS['test_connectors'] = array();
+
+// Backing store for the is_plugin_active() stub — list of active plugin files.
+$GLOBALS['test_active_plugins'] = array();
+
 // -------------------------------------------------------------------------
 // WordPress function stubs
 // -------------------------------------------------------------------------
@@ -27,6 +33,18 @@ $GLOBALS['test_options'] = array();
 if ( ! function_exists( 'get_option' ) ) {
 	function get_option( $option, $default = false ) {
 		return $GLOBALS['test_options'][ $option ] ?? $default;
+	}
+}
+
+if ( ! function_exists( 'wp_get_connectors' ) ) {
+	function wp_get_connectors() {
+		return $GLOBALS['test_connectors'];
+	}
+}
+
+if ( ! function_exists( 'is_plugin_active' ) ) {
+	function is_plugin_active( $plugin ) {
+		return in_array( $plugin, $GLOBALS['test_active_plugins'], true );
 	}
 }
 
