@@ -16,7 +16,7 @@
 
 	<config name="minimum_supported_wp_version" value="7.0"/>
 	<config name="text_domain" value="ai-log-analyzer-for-woocommerce"/>
-	<config name="prefixes" value="ai_log_analyzer,AI_LOG_ANALYZER"/>
+	<config name="prefixes" value="ailwc"/>
 
 	<file>ai-log-analyzer-for-woocommerce.php</file>
 	<file>includes/</file>
