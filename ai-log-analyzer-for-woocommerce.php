@@ -32,7 +32,7 @@ require_once AILWC_LOG_ANALYZER_PATH . 'includes/class-log-parser.php';
 require_once AILWC_LOG_ANALYZER_PATH . 'includes/class-ai-client.php';
 require_once AILWC_LOG_ANALYZER_PATH . 'includes/class-analysis-engine.php';
 require_once AILWC_LOG_ANALYZER_PATH . 'includes/class-log-integration.php';
-require_once AILWC_LOG_ANALYZER_PATH . 'includes/class-admin-interface.php';
+require_once AILWC_LOG_ANALYZER_PATH . 'admin/class-admin-interface.php';
 
 register_activation_hook( __FILE__, array( 'AILWC_Log_Analyzer\Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'AILWC_Log_Analyzer\Plugin', 'deactivate' ) );
